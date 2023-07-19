@@ -43,7 +43,7 @@ pipeline {
                     firstName = input(
             message: 'What is your first name?',
             ok: 'Submit',
-            
+
             parameters: [string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)]
           )
                 }
@@ -53,7 +53,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    echo "Good Morning, $firstName"
+                    echo "Good Morning, $FIRST_NAME"
                 }
                 sh '''
           hostname
