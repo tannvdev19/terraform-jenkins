@@ -35,15 +35,6 @@
 pipeline {
     agent any
 
-    tools {
-        terraform 'terraform'
-    }
-
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-    }
-
     stages {
         stage('Check value') {
             steps {
@@ -51,12 +42,10 @@ pipeline {
                     def userInput = input(
                         id: 'userInput',
                         message: 'Do you want to proceed for production deployment?',
-                        parameters: [
-                            [$class: 'SubmitterParameterDefinition', name: 'decision', value: 'Confirm', description: 'Click "Confirm" to proceed, or "Abort" to cancel.']
-                        ]
+                        ok: 'Confirm'
                     )
 
-                    if (userInput == 'Proceed') {
+                    if (userInput) {
                         echo 'Proceeding with production deployment...'
                         // Your deployment steps go here, e.g., terraform apply -auto-approve
                         sh 'terraform apply -auto-approve'
