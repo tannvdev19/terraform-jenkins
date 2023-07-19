@@ -46,20 +46,22 @@ pipeline {
 
     stages {
         stage('Check value') {
-            def userInput = input(
+            script {
+                    def userInput = input(
                         id: 'userInput',
                         message: 'Do you want to proceed for production deployment?',
                         parameters: [
-                            [$class: 'BooleanParameterDefinition', name: 'proceed', defaultValue: false],
+                            [$class: 'SubmitterParameterDefinition', name: 'decision', value: 'Confirm', description: 'Click "Confirm" to proceed, or "Abort" to cancel.']
                         ]
-            )
+                    )
 
-            if (userInput.proceed) {
-                echo 'Proceeding with production deployment...'
-                // Your deployment steps go here, e.g., terraform apply -auto-approve
-                // sh 'terraform apply -auto-approve'
+                    if (userInput == 'Proceed') {
+                    echo 'Proceeding with production deployment...'
+                    // Your deployment steps go here, e.g., terraform apply -auto-approve
+                    sh 'terraform apply -auto-approve'
                     } else {
-                echo 'Production deployment aborted.'
+                    echo 'Production deployment aborted.'
+                    }
             }
         }
     }
