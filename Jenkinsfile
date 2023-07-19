@@ -47,6 +47,7 @@ pipeline {
                             id: 'userInput',
                             message: 'Select one or more options:'
                         )
+                        currentBuild.result = 'PROCEED'
                     } catch (err) {
                         echo 'User chose to abort the build.'
                         currentBuild.result = 'ABORTED'
@@ -62,22 +63,7 @@ pipeline {
         stage('Next Steps') {
             steps {
                 script {
-                    // Use the userChoice variable from the previous stage
-                    if (userChoice?.Option1) {
-                        echo 'Option 1 is selected. Proceeding with next steps...'
-                    // Add your logic for Option 1
-                    } else {
-                        echo 'Option 1 is not selected. Skipping related steps...'
-                    }
-
-                    if (userChoice?.Option2) {
-                        echo 'Option 2 is selected. Proceeding with next steps...'
-                    // Add your logic for Option 2
-                    } else {
-                        echo 'Option 2 is not selected. Skipping related steps...'
-                    }
-
-                // Add more logic based on the selected options
+                    echo "User choice was: ${currentBuild.result}"
                 }
             }
         }
