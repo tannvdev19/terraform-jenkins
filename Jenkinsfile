@@ -44,8 +44,7 @@ pipeline {
                         message: 'Do you want to proceed for production deployment?',
                         ok: 'Confirm'
                     )
-
-                    /* groovylint-disable-next-line NestedBlockDepth */
+                    echo "User input: ${userInput}"
                     if (userInput == 'Confirm') {
                         echo 'Proceeding with production deployment...'
                         // Your deployment steps go here, e.g., terraform apply -auto-approve
