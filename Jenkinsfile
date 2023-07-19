@@ -39,16 +39,17 @@ pipeline {
         stage('Check value') {
             steps {
                 script {
-                    def userInput = input(
+                    String userInput = input(
                         id: 'userInput',
                         message: 'Do you want to proceed for production deployment?',
                         ok: 'Confirm'
                     )
 
-                    if (userInput) {
+                    /* groovylint-disable-next-line NestedBlockDepth */
+                    if (userInput == 'Confirm') {
                         echo 'Proceeding with production deployment...'
                         // Your deployment steps go here, e.g., terraform apply -auto-approve
-                        sh 'terraform apply -auto-approve'
+                        // sh 'terraform apply -auto-approve'
                     } else {
                         echo 'Production deployment aborted.'
                     }
