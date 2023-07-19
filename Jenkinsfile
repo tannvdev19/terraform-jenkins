@@ -41,7 +41,6 @@ pipeline {
             steps {
                 script {
                     // Use the input step with checkBox parameter
-                    def userChoice
                     try {
                         userChoice = input(
                             id: 'userInput',
@@ -53,8 +52,7 @@ pipeline {
                         currentBuild.result = 'ABORTED'
                         error 'Build aborted by user.'
                     }
-                    echo "User's Choice - Option 1: ${userChoice.Option1}"
-                    echo "User's Choice - Option 2: ${userChoice.Option2}"
+
                 // Add more echos or use the selected options in your pipeline logic
                 }
             }
