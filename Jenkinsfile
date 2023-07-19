@@ -33,28 +33,20 @@
 //     }
 // }
 
-def firstName = null
 pipeline {
     agent none
     stages {
         stage('input') {
-            steps {
-                script {
-                    firstName = input(
-            message: 'What is your first name?',
-            ok: 'Submit',
-
-            parameters: [string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)]
-          )
+            agent any
+            input {
+                message 'What is your first name?'
+                ok 'Submit'
+                parameters {
+                    string(defaultValue: 'Dave', name: 'FIRST_NAME', trim: true)
                 }
             }
-        }
-        stage('output') {
-            agent any
             steps {
-                script {
-                    echo "Good Morning, $FIRST_NAME"
-                }
+                echo "Good Morning, $FIRST_NAME"
                 sh '''
           hostname
           cat /etc/redhat-release
