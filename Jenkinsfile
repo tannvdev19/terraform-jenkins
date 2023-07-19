@@ -47,19 +47,16 @@ pipeline {
                         parameters: [
                             [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Option 1', name: 'Option1'],
                             [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Option 2', name: 'Option2'],
-                            // Add more checkboxes if needed
+                        // Add more checkboxes if needed
                         ]
                     )
 
                     echo "User's Choice - Option 1: ${userChoice.Option1}"
                     echo "User's Choice - Option 2: ${userChoice.Option2}"
-                    // Add more echos or use the selected options in your pipeline logic
+                // Add more echos or use the selected options in your pipeline logic
                 }
             }
         }
 
-        stage('Next Steps') {
-            // Add your subsequent stages and build steps here
-        }
     }
 }
