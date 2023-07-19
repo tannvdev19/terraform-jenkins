@@ -42,15 +42,16 @@ pipeline {
                     String userInput = input(
                         id: 'userInput',
                         message: 'Do you want to proceed for production deployment?',
-                        ok: 'Confirm'
+                        parameters: [
+                            [$class: 'ChoiceParameterDefinition', choices: 'Confirm\nAbort', description: '', name: 'userInput']
+                        ]
                     )
                     echo "User input: ${userInput}"
+                    
                     if (userInput == 'Confirm') {
-                        echo 'Proceeding with production deployment...'
-                        // Your deployment steps go here, e.g., terraform apply -auto-approve
-                        // sh 'terraform apply -auto-approve'
+                        echo 'Proceeding with deployment'
                     } else {
-                        echo 'Production deployment aborted.'
+                        error 'Aborting deployment'
                     }
                 }
             }
