@@ -35,7 +35,7 @@
 
 pipeline {
     agent any
-
+    boolean isProceed = false
     stages {
         stage('User Input') {
             steps {
@@ -46,10 +46,10 @@ pipeline {
                             id: 'userInput',
                             message: 'Select one or more options:'
                         )
-                        currentBuild.result = 'PROCEED'
+                        isProceed = true
                     } catch (err) {
                         echo 'User chose to abort the build.'
-                        currentBuild.result = 'ABORTED'
+                        isProceed = false
                         error 'Build aborted by user.'
                     }
 
@@ -61,7 +61,7 @@ pipeline {
         stage('Next Steps') {
             steps {
                 script {
-                    echo "User choice was: ${currentBuild.result}"
+                    echo "User choice was: ${isProceed}"
                 }
             }
         }
