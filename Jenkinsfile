@@ -38,6 +38,9 @@ pipeline {
     stages {
         stage('input') {
             agent any
+            when {
+                beforeInput true
+            }
             input {
                 message 'What is your first name?'
                 ok 'Submit'
@@ -49,7 +52,7 @@ pipeline {
                 echo "Good Morning, $FIRST_NAME"
                 sh '''
           hostname
-          cat /etc/os-release 
+          cat /etc/os-release
         '''
             }
         }
