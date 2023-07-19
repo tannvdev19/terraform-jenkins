@@ -34,41 +34,16 @@
 // }
 
 pipeline {
-    agent any
-
-        tools {
-        terraform 'terraform'
+  agent any
+  stages {
+    stage('input') {
+      steps {
+        input(message: 'Hello World!', ok: 'Submit')
+        sh '''
+          hostname
+          cat /etc/redhat-release
+        '''
+      }
     }
-
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-    }
-
-    stages {
-        stage('User Input') {
-            steps {
-                script {
-                    // Define the options for the checkbox
-                    def options = ['Option 1', 'Option 2', 'Option 3']
-
-                    // Use the input step with checkboxParameter
-                    def userChoice = input(
-                        id: 'userInput',
-                        message: 'Select one or more options:',
-                        parameters: [
-                            checkboxParameter(
-                                name: 'UserChoice',
-                                description: 'Choose options:',
-                                checked: options // All options are initially checked
-                            )
-                        ]
-                    )
-
-                    echo "User's Choice: ${userChoice}"
-                }
-            }
-        }
-    }
+  }
 }
-
