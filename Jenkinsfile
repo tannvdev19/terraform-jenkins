@@ -37,7 +37,7 @@ pipeline {
     agent any
 
     environment {
-        boolean isProceed = false
+        boolean isProceed = null
     }
     stages {
         stage('User Input') {
@@ -45,11 +45,11 @@ pipeline {
                 script {
                     // Use the input step with checkBox parameter
                     try {
+                        env.isProceed = true
                         userChoice = input(
                             id: 'userInput',
                             message: 'Select one or more options:'
                         )
-                        env.isProceed = true
                     } catch (err) {
                         echo 'User chose to abort the build.'
                         env.isProceed = false
